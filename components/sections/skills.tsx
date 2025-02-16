@@ -39,21 +39,24 @@ export function Skills() {
                 } gap-6`}
               >
                 {skills.map((skill, index) => (
-                  <div
+                  <a
                     key={`${category}-${index}`}
-                    className="group relative flex flex-col items-center justify-center p-4 rounded-lg border bg-card text-card-foreground hover:border-primary/50 transition-all duration-300 gap-3"
+                    href={skill.doc}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative flex flex-col items-center justify-center p-4 rounded-lg border bg-muted/90 text-card-foreground hover:bg-gray-700 hover:border-primary/50 transition-all duration-300 gap-3 cursor-pointer"
                   >
                     <Image
-                      src={`https://cdn.simpleicons.org/${skill.icon}/666666`}
+                      src={`https://cdn.simpleicons.org/${skill.icon}`}
                       alt={skill.name}
                       width={40}
                       height={40}
-                      className="w-10 h-10 dark:invert group-hover:scale-110 transition-transform duration-300"
+                      className="w-10 h-10 group-hover:scale-110 transition-transform duration-300"
                     />
-                    <span className="text-sm font-medium text-center text-muted-foreground group-hover:text-foreground transition-colors duration-300">
+                    <span className="text-sm font-medium text-center text-muted-foreground group-hover:text-white transition-colors duration-300">
                       {skill.name}
                     </span>
-                  </div>
+                  </a>
                 ))}
               </div>
             </div>
