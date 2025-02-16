@@ -32,15 +32,6 @@ export function Hero({ person }: HeroProps) {
       </div>
       <div className="flex gap-6">
         <Button size="lg" asChild>
-          <a
-            href={person.linkedInUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            View LinkedIn
-          </a>
-        </Button>
-        <Button size="lg" variant="outline" asChild>
           <a href="#contact">Contact Me</a>
         </Button>
       </div>

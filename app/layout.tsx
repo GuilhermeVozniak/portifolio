@@ -17,6 +17,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Portifolio - Guilherme Vozniak",
   description: "Software Engineer & Security Researcher",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
