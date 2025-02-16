@@ -21,9 +21,12 @@ export function Hero({ person }: HeroProps) {
       </div>
       <div className="space-y-6">
         <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tighter">
-          Hi, I&apos;m <span className="text-primary">{person.firstName}</span>
+          Hi, I&apos;m{" "}
+          <span className="bg-gradient-to-r from-[#3b82f6] via-[#8b5cf6] to-[#d946ef] bg-clip-text text-transparent">
+            {person.firstName}
+          </span>
         </h1>
-        <p className="text-xl sm:text-2xl text-muted-foreground max-w-[800px] leading-relaxed">
+        <p className="text-xl sm:text-2xl text-muted-foreground/90 max-w-[800px] leading-relaxed font-light">
           {person.headline}
         </p>
       </div>

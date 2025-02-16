@@ -85,12 +85,12 @@ export const Skills: Skill[] = [
     category: "Protocols",
   },
   {
-    name: "Amazon Web Services (AWS)",
+    name: "AWS",
     icon: "amazon",
     category: "Infrastructure",
   },
   {
-    name: "Google Cloud Platform (GCP)",
+    name: "Google (GCP)",
     icon: "googlecloud",
     category: "Infrastructure",
   },
