@@ -70,7 +70,7 @@ export function Experience({ person }: ExperienceProps) {
             </div>
             <div className="space-y-4">
               {company.positions.map((position, posIndex) => (
-                <div key={posIndex} className="border-l-2 border-muted pl-4">
+                <div key={posIndex} className="border-l border-muted/50 pl-2">
                   <h4 className="text-lg font-medium tracking-tight">
                     {position.title}
                   </h4>
