@@ -15,9 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Guilherme V. - Software Engineer & Security Researcher",
-  description:
-    "Software Engineer with expertise in JavaScript/Typescript, React, React Native, Go, and Node. Specializing in web development and security research.",
+  title: "Portifolio - Guilherme Vozniak",
+  description: "Software Engineer & Security Researcher",
 };
 
 export default function RootLayout({
@@ -26,9 +25,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}
       >
         <ThemeProvider>
           <ThemeToggle />
