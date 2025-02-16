@@ -12,6 +12,9 @@ export function About({ person }: AboutProps) {
         <h2 className="text-4xl font-bold mb-8 tracking-tighter bg-gradient-to-r from-primary via-primary/70 to-primary bg-clip-text text-transparent">
           About Me
         </h2>
+        <p className="text-xl text-muted-foreground mb-12">
+          Learn more about my background, current role, and where I&apos;m based
+        </p>
         <p className="text-lg text-muted-foreground mb-6 whitespace-pre-line leading-relaxed">
           {person.summary}
         </p>

@@ -13,9 +13,12 @@ export function Skills() {
 
   return (
     <section className="container mx-auto px-4 py-24">
-      <h2 className="text-4xl font-bold mb-16 text-center tracking-tighter bg-gradient-to-r from-primary via-primary/70 to-primary bg-clip-text text-transparent">
+      <h2 className="text-4xl font-bold mb-8 text-center tracking-tighter bg-gradient-to-r from-primary via-primary/70 to-primary bg-clip-text text-transparent">
         Skills
       </h2>
+      <p className="text-xl text-muted-foreground mb-12 text-center">
+        Explore my technical expertise and professional capabilities
+      </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 max-w-[1200px] mx-auto">
         {Object.entries(groupedSkills).map(
           ([category, skills], categoryIndex, categories) => (

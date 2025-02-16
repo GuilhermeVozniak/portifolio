@@ -8,9 +8,12 @@ interface ExperienceProps {
 export function Experience({ person }: ExperienceProps) {
   return (
     <section className="container mx-auto px-4 py-24">
-      <h2 className="text-4xl font-bold mb-16 text-center tracking-tighter bg-gradient-to-r from-primary via-primary/70 to-primary bg-clip-text text-transparent">
+      <h2 className="text-4xl font-bold mb-8 text-center tracking-tighter bg-gradient-to-r from-primary via-primary/70 to-primary bg-clip-text text-transparent">
         Work Experience
       </h2>
+      <p className="text-xl text-muted-foreground mb-12 text-center">
+        Discover my professional journey and the companies I&apos;ve worked with
+      </p>
       <div className="grid grid-cols-1 gap-12 max-w-[800px] mx-auto">
         {Object.entries(
           person.positions.positionHistory.reduce<
