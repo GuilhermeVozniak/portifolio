@@ -1,5 +1,4 @@
 import { Person, PositionHistory } from "@/mocks/profile";
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
 interface ExperienceProps {
@@ -51,9 +50,16 @@ export function Experience({ person }: ExperienceProps) {
                 />
               </div>
               <div>
-                <h3 className="text-2xl font-semibold tracking-tight">
-                  {companyName}
-                </h3>
+                <a
+                  href={company.linkedInUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-block hover:text-primary transition-all duration-200 hover:-translate-y-0.5 decoration-primary hover:underline underline-offset-4"
+                >
+                  <h3 className="text-2xl font-semibold tracking-tight">
+                    {companyName}
+                  </h3>
+                </a>
                 <p className="text-sm text-muted-foreground">
                   {company.location}
                 </p>
@@ -77,17 +83,6 @@ export function Experience({ person }: ExperienceProps) {
                   </p>
                 </div>
               ))}
-            </div>
-            <div className="flex gap-2 pt-2">
-              <Button variant="outline" size="sm" asChild>
-                <a
-                  href={company.linkedInUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  View Company
-                </a>
-              </Button>
             </div>
           </div>
         ))}
