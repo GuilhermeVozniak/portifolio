@@ -9,7 +9,9 @@ interface ExperienceProps {
 export function Experience({ person }: ExperienceProps) {
   return (
     <section className="container mx-auto px-4 py-24">
-      <h2 className="text-3xl font-bold mb-12 text-center">Work Experience</h2>
+      <h2 className="text-4xl font-bold mb-16 text-center tracking-tighter bg-gradient-to-r from-primary via-primary/70 to-primary bg-clip-text text-transparent">
+        Work Experience
+      </h2>
       <div className="grid grid-cols-1 gap-12 max-w-[800px] mx-auto">
         {Object.entries(
           person.positions.positionHistory.reduce<
@@ -49,7 +51,9 @@ export function Experience({ person }: ExperienceProps) {
                 />
               </div>
               <div>
-                <h3 className="text-2xl font-semibold">{companyName}</h3>
+                <h3 className="text-2xl font-semibold tracking-tight">
+                  {companyName}
+                </h3>
                 <p className="text-sm text-muted-foreground">
                   {company.location}
                 </p>
@@ -58,7 +62,9 @@ export function Experience({ person }: ExperienceProps) {
             <div className="space-y-4">
               {company.positions.map((position, posIndex) => (
                 <div key={posIndex} className="border-l-2 border-muted pl-4">
-                  <h4 className="text-lg font-medium">{position.title}</h4>
+                  <h4 className="text-lg font-medium tracking-tight">
+                    {position.title}
+                  </h4>
                   <p className="text-sm text-muted-foreground mb-2">
                     {position.startEndDate.start.month}/
                     {position.startEndDate.start.year}
@@ -66,7 +72,7 @@ export function Experience({ person }: ExperienceProps) {
                       ? ` - ${position.startEndDate.end.month}/${position.startEndDate.end.year}`
                       : " - Present"}
                   </p>
-                  <p className="text-muted-foreground whitespace-pre-line">
+                  <p className="text-muted-foreground whitespace-pre-line leading-relaxed">
                     {position.description}
                   </p>
                 </div>

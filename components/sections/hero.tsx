@@ -8,25 +8,27 @@ interface HeroProps {
 
 export function Hero({ person }: HeroProps) {
   return (
-    <section className="container mx-auto px-4 py-24 flex flex-col items-center text-center gap-8">
-      <div className="relative w-32 h-32 rounded-full overflow-hidden mb-4">
+    <section className="container mx-auto px-4 py-32 flex flex-col items-center text-center gap-12">
+      <div className="relative w-40 h-40 rounded-full overflow-hidden mb-6">
         <Image
           src={person.photoUrl}
           alt={`${person.firstName} ${person.lastName}`}
-          width={128}
-          height={128}
+          width={160}
+          height={160}
           className="object-cover w-full h-full"
           priority
         />
       </div>
-      <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">
-        Hi, I&apos;m <span className="text-primary">{person.firstName}</span>
-      </h1>
-      <p className="text-xl text-muted-foreground max-w-[800px]">
-        {person.headline}
-      </p>
-      <div className="flex gap-4">
-        <Button asChild>
+      <div className="space-y-6">
+        <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tighter">
+          Hi, I&apos;m <span className="text-primary">{person.firstName}</span>
+        </h1>
+        <p className="text-xl sm:text-2xl text-muted-foreground max-w-[800px] leading-relaxed">
+          {person.headline}
+        </p>
+      </div>
+      <div className="flex gap-6">
+        <Button size="lg" asChild>
           <a
             href={person.linkedInUrl}
             target="_blank"
@@ -35,7 +37,7 @@ export function Hero({ person }: HeroProps) {
             View LinkedIn
           </a>
         </Button>
-        <Button variant="outline" asChild>
+        <Button size="lg" variant="outline" asChild>
           <a href="#contact">Contact Me</a>
         </Button>
       </div>
