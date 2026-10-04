@@ -118,13 +118,13 @@ export function Screen({
       c.fillText("gv / studio", 24, 34);
       c.fillText("Explore my work ↗", 48, 450);
       for (let i = 0; i < 5; i++) {
-        c.fillStyle = ["#ff652c", "#c3aeeb", "#b6ff00", "#f4dfb8", "#86bac7"][
+        c.fillStyle = ["#b6ff00", "#c9e3b6", "#b6ff00", "#a5c887", "#86b897"][
           i
         ];
         c.fillRect(315 + i * 63, 475, 44, 40);
       }
     } else if (kind === "portrait") {
-      c.fillStyle = "#ff652c";
+      c.fillStyle = "#b6ff00";
       c.beginPath();
       c.arc(200, 370, 146, 0, Math.PI * 2);
       c.fill();

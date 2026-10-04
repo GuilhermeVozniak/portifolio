@@ -5,7 +5,6 @@
   --ink: #171c17;
   --paper: #eceee5;
   --muted: #a4ac9b;
-  --orange: #ff6936;
   --lime: #b6ff00;
   --font-mono: "IBM Plex Mono", monospace;
   color-scheme: dark;
@@ -48,7 +47,7 @@ a {
 }
 button:focus-visible,
 a:focus-visible {
-  outline: 3px solid var(--orange);
+  outline: 3px solid var(--lime);
   outline-offset: 5px;
 }
 p {
@@ -85,7 +84,7 @@ p {
   gap: 13px;
 }
 .wordmark > span {
-  background: var(--orange);
+  background: var(--lime);
   width: 48px;
   height: 48px;
   display: grid;
@@ -160,9 +159,10 @@ p {
   font-size: 16px;
   line-height: 1.7;
   margin: 0 0 30px;
+  max-width: 390px;
 }
 .primary-button {
-  background: var(--orange);
+  background: var(--lime);
   color: #181c13;
   display: flex;
   align-items: center;
@@ -175,7 +175,7 @@ p {
   transition: background 0.2s;
 }
 .primary-button:hover {
-  background: #ff865d;
+  background: #caff55;
 }
 .project-shortcut {
   display: inline-flex;
@@ -200,7 +200,7 @@ p {
 }
 .tiny-cross {
   font-size: 31px;
-  color: var(--orange);
+  color: var(--lime);
 }
 .studio-frame {
   position: relative;
@@ -370,10 +370,12 @@ p {
 .featured-projects {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  gap: 48px 24px;
 }
 .featured-project {
   min-width: 0;
+  display: flex;
+  flex-direction: column;
 }
 .project-art {
   position: relative;
@@ -388,14 +390,22 @@ p {
 .project-art:hover {
   transform: translateY(-5px);
 }
-.feature-0 .project-art {
+.feature-option-tab .project-art,
+.feature-calendium .project-art,
+.feature-rockpi-penta-golang .project-art {
   background: #b6caa5;
 }
-.feature-1 .project-art {
-  background: #f18d64;
+.feature-tiles-spliter .project-art,
+.feature-blue-macaw .project-art,
+.feature-drag-zone .project-art {
+  background: #b8d3a3;
 }
-.feature-2 .project-art {
-  background: #c6bada;
+.feature-app-cleaner .project-art {
+  background: #c8d6be;
+}
+.feature-burner-wallet .project-art,
+.feature-9router .project-art {
+  background: #8fad79;
 }
 .art-demo {
   position: absolute;
@@ -484,12 +494,12 @@ p {
   background: #d1dcaf;
 }
 .mini-apps > span:nth-child(2) {
-  background: #ff9764;
+  background: #b6ff00;
   outline: 1px solid #b6ff00;
   outline-offset: 3px;
 }
 .mini-apps > span:nth-child(3) {
-  background: #bba6c6;
+  background: #b4c2aa;
 }
 .tile-demo {
   position: absolute;
@@ -501,20 +511,20 @@ p {
   grid-template-rows: 1fr 1fr;
   gap: 7px;
   transform: rotate(-7deg);
-  background: #8f422c;
+  background: #455936;
   padding: 10px;
   border-radius: 9px;
-  box-shadow: 13px 19px 0 #ad523125;
+  box-shadow: 13px 19px 0 #699e4025;
 }
 .tile-demo > span {
-  background: #fbd4ad;
+  background: #d3eac1;
   border-radius: 3px;
-  border-top: 9px solid #ffc28e;
+  border-top: 9px solid #badca0;
 }
 .tile-demo > span:first-child {
   grid-row: span 2;
-  background: #f8ecce;
-  border-top: 9px solid #fde7b6;
+  background: #edf5e6;
+  border-top: 9px solid #d2ebbf;
 }
 .tile-demo > span:last-child {
   background: #b6ff00;
@@ -525,17 +535,17 @@ p {
   top: 35px;
   width: 154px;
   height: 154px;
-  border: 1px solid #7c5c9850;
+  border: 1px solid #77906450;
   border-radius: 50%;
   display: grid;
   place-items: center;
   box-shadow:
-    0 0 0 18px #b5a1ca60,
-    0 0 0 36px #b5a1ca25;
+    0 0 0 18px #b3c5a660,
+    0 0 0 36px #b3c5a625;
 }
 .cleaner-orbit span {
   font-size: 130px;
-  color: #47345c;
+  color: #465739;
   line-height: 1;
   transform: rotate(-15deg);
 }
@@ -564,9 +574,7 @@ p {
   height: 39px;
   display: grid;
   place-items: center;
-  border-radius: 10px;
-  overflow: hidden;
-  color: #27311f;
+  color: inherit;
   font-size: 25px;
   flex-shrink: 0;
 }
@@ -578,50 +586,38 @@ p {
 .project-icon.large {
   width: 76px;
   height: 76px;
-  border-radius: 19px;
   font-size: 50px;
 }
 .featured-project > p {
-  font-size: 12px;
-  color: #a0ae93;
+  font-size: 13px;
+  color: #b6c2ac;
   margin: 15px 0 0;
+  flex: 1;
 }
-.more-projects {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0 40px;
-  margin-top: 49px;
-}
-.more-projects > button {
+.project-card-links {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 21px 0;
-  border-top: 1px solid #343e2e;
-  text-align: left;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 18px;
+  margin-top: 20px;
+  border-top: 1px solid #3a4633;
+  font-size: 12px;
 }
-.more-projects > button:hover {
+.project-card-links button,
+.project-card-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 32px;
+  padding: 0;
+}
+.project-card-links a {
   color: var(--lime);
 }
-.more-projects strong {
-  font-weight: 500;
-  font-size: 14px;
-  display: block;
-}
-.more-projects small {
-  font-size: 11px;
-  color: #9aa98e;
-  display: block;
-  margin-top: 5px;
-}
-.more-projects .project-category {
-  font-size: 9px;
-  color: #929f85;
-  margin-left: auto;
-  white-space: nowrap;
-}
-.more-projects svg {
-  flex-shrink: 0;
+.project-card-links button:hover,
+.project-card-links a:hover {
+  color: #c9f3a8;
 }
 .github-link {
   display: flex;
@@ -725,12 +721,12 @@ p {
   margin: 8px 0 50px;
 }
 .site-footer > div:first-child > button:hover {
-  color: var(--orange);
+  color: var(--lime);
 }
 .site-footer > div:first-child svg {
   height: 50px;
   width: 50px;
-  color: var(--orange);
+  color: var(--lime);
 }
 .footer-bottom {
   border-top: 1px solid #37402f;
@@ -788,13 +784,6 @@ p {
   font-weight: 400;
   margin-left: 5px;
   color: #b6ff00;
-}
-.os-name small {
-  font-size: 10px;
-  font-weight: 400;
-  letter-spacing: 0;
-  margin-left: 24px;
-  color: #8ba07e;
 }
 .desktop-workspace {
   flex: 1;
@@ -885,8 +874,8 @@ p {
   width: 27px;
   height: 27px;
 }
-.orange {
-  background: #ff8a51;
+.fern {
+  background: #b6ff00;
 }
 .lime {
   background: #b6ff00;
@@ -894,11 +883,11 @@ p {
 .silver {
   background: #b9c4ac;
 }
-.purple {
-  background: #bcadde;
+.mint {
+  background: #c3d8b3;
 }
-.peach {
-  background: #f4cea0;
+.sage {
+  background: #a6c38a;
 }
 .paper {
   background: #e7e8cd;
@@ -947,17 +936,20 @@ p {
   opacity: 0.65;
   border-bottom-color: transparent;
 }
-.tile-button {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 11px;
-  min-height: 36px;
+.taskbar-sound {
+  display: grid;
+  place-items: center;
+  width: 41px;
+  height: 41px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  color: #c4d2b7;
+  margin-left: auto;
 }
-.desktop-hint {
-  font-size: 10px;
-  color: #95a682;
-  margin-left: 15px;
+.taskbar-sound:hover,
+.taskbar-sound[aria-label="Mute sound"] {
+  color: var(--lime);
+  background: #b6ff0012;
 }
 .app-window {
   position: absolute;
@@ -1022,7 +1014,7 @@ p {
   background: #c0cda9;
 }
 .window-controls > button:last-child:hover {
-  background: #ff875c;
+  background: #b5dc97;
 }
 .window-body {
   overflow: auto;
@@ -1229,7 +1221,7 @@ p {
   color: #849a73;
 }
 .story-content pre em {
-  color: #ff9865;
+  color: #c6f2a5;
   font-style: normal;
 }
 .story-result {
@@ -1254,7 +1246,7 @@ p {
   place-items: center;
   width: 72px;
   height: 72px;
-  background: var(--orange);
+  background: var(--lime);
   color: #263222;
   font-size: 47px;
   letter-spacing: -5px;
@@ -1349,9 +1341,6 @@ p {
   .art-demo {
     transform: scale(0.9);
   }
-  .project-category {
-    display: none;
-  }
   .origin-section {
     grid-template-columns: 1.2fr 1fr;
     gap: 32px;
@@ -1361,9 +1350,6 @@ p {
   }
   .origin-section h2 {
     font-size: 36px;
-  }
-  .desktop-hint {
-    display: none;
   }
 }
 @media (max-width: 760px) {
@@ -1413,9 +1399,6 @@ p {
     font-size: 14px;
     margin-bottom: 24px;
     max-width: 340px;
-  }
-  .desktop-break {
-    display: none;
   }
   .primary-button {
     display: inline-flex;
@@ -1506,19 +1489,6 @@ p {
   .featured-project > p {
     margin-top: 10px;
   }
-  .more-projects {
-    grid-template-columns: 1fr;
-    margin-top: 34px;
-  }
-  .more-projects > button {
-    padding: 17px 0;
-  }
-  .more-projects > button > svg {
-    margin-left: auto;
-  }
-  .more-projects .project-category {
-    display: none;
-  }
   .origin-section {
     padding: 35px 7%;
     display: flex;
@@ -1568,9 +1538,6 @@ p {
   .desktop-menubar > button {
     font-size: 10px;
   }
-  .os-name small {
-    display: none;
-  }
   .os-name {
     font-size: 19px;
   }
@@ -1607,9 +1574,6 @@ p {
     height: 61px;
     padding: 7px 9px;
     gap: 8px;
-  }
-  .tile-button {
-    display: none;
   }
   .taskbar-windows > button {
     padding: 10px;

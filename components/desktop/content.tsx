@@ -21,10 +21,7 @@ export function ProjectIcon({
 }) {
   const [failed, setFailed] = useState(false);
   return (
-    <span
-      className={`project-icon ${large ? "large" : ""}`}
-      style={{ background: project.color }}
-    >
+    <span className={`project-icon ${large ? "large" : ""}`}>
       {project.image && !failed ? (
         <Image
           width={large ? 76 : 39}
@@ -75,11 +72,13 @@ export function ProjectDetail({ project }: { project: Project }) {
       <h2>{project.name}</h2>
       <p className="detail-tagline">{project.tagline}</p>
       <p>{project.description}</p>
-      <div className="tech-list">
-        {project.technologies.map((t) => (
-          <span key={t}>{t}</span>
-        ))}
-      </div>
+      {project.technologies.length > 0 && (
+        <div className="tech-list">
+          {project.technologies.map((t) => (
+            <span key={t}>{t}</span>
+          ))}
+        </div>
+      )}
       {project.install && (
         <>
           <h3>Install with Homebrew</h3>
@@ -87,17 +86,24 @@ export function ProjectDetail({ project }: { project: Project }) {
         </>
       )}
       <div className="detail-links">
-        <a
-          className="solid-link"
-          href={project.source}
-          target="_blank"
-          rel="noreferrer"
-        >
-          <Github size={17} /> View source <ArrowUpRight size={16} />
-        </a>
         {project.website && (
-          <a href={project.website} target="_blank" rel="noreferrer">
+          <a
+            className="solid-link"
+            href={project.website}
+            target="_blank"
+            rel="noreferrer"
+          >
             Visit website <ArrowUpRight size={16} />
+          </a>
+        )}
+        {project.source && (
+          <a
+            className={project.website ? undefined : "solid-link"}
+            href={project.source}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <Github size={17} /> View source <ArrowUpRight size={16} />
           </a>
         )}
       </div>

@@ -27,28 +27,28 @@ Bun manages dependencies, development, tests, and the production server. The bui
 
 ## Content and structure
 
-- `lib/projects.ts`: curated public projects, technologies, maturity, attribution and install commands. No live API or credentials required.
+- `lib/projects.ts`: curated public projects, summaries, verified websites, technologies, maturity, attribution and install commands. No live API or credentials required.
 - `components/studio/room.tsx`: procedural room based on desk photographs; geometry and surface art are original.
 - `components/studio/scene.tsx`: bounded camera controls, transition, rendering quality and context-loss handling.
 - `components/desktop/`: accessible HTML desktop, window controls, project details, personal story and contact.
 - `lib/desktop.ts`: tested window state and viewport bounds.
-- `public/projects/`: local app icons copied from the corresponding public repositories. 9Router uses its custom Darwin icon. Original product origins remain attributed in project details.
+- `public/projects/`: local app icons copied from the corresponding public repositories. 9Router uses its custom Darwin icon. Blue Macaw uses the official logo from `https://bluemacaw.org/logo.svg`. Original product origins remain attributed in project details.
 - `public/studio-fallback.svg`: local original illustration shown when WebGL is unavailable.
 
-The three featured project illustrations are labeled concepts, not application screenshots. Photographs, private notes, and private repositories are not included. Personal music is not included; the speaker interaction plays a quiet, seven-second synthesized chord, explicitly labeled a sound experiment.
+All nine project illustrations are original concept sketches, not application screenshots. Each project has a summary and a direct link to its website or public source. Photographs, private notes, and private repositories are not included. Personal music is not included; the speaker interaction plays a quiet, seven-second synthesized chord, explicitly labeled a sound experiment.
 
 ## Controls and accessibility
 
 - Drag the room to look around; use Reset view to restore the camera.
 - Click the main monitor or Open desktop. The laptop opens the childhood HTML story; the server opens hardware/infrastructure projects.
 - The same actions have HTML buttons. Projects remain available before the room loads.
-- Open, move, minimize, maximize, restore, close, or arrange desktop windows. Focus the move control and use arrow keys for keyboard movement.
+- Open, move, minimize, maximize, restore, or close desktop windows. Focus the move control and use arrow keys for keyboard movement.
 - Escape closes the top window, then returns to the room. Focus returns to the originating control. The background is inert while the desktop is open.
-- Mobile uses full-size panels and a taskbar. Reduced motion removes camera travel and damping. No audio autoplays.
+- Mobile uses full-size panels and a taskbar. Reduced motion removes camera travel and damping. The sound control sits at the right end of the taskbar. No audio autoplays.
 - Missing WebGL, lost graphics contexts and failed images have local fallbacks. Rendering pauses while the document is hidden and otherwise runs on demand.
 
 ## Verification
 
-Playwright exercises desktop window lifecycle, mobile layout, reduced motion, forced WebGL failure, graphics-context loss, room orbit/reset, multiple windows, dragging, arrangement, resizing, sound, and the childhood story. It also saves desktop/mobile screenshots in ignored `test-results/` for visual inspection.
+Playwright exercises desktop window lifecycle, mobile layout, reduced motion, forced WebGL failure, graphics-context loss, room orbit/reset, multiple windows, dragging, resizing, taskbar sound, the childhood story, and direct project links. It also saves desktop/mobile screenshots in ignored `test-results/` for visual inspection.
 
 Design and execution notes are under `docs/superpowers/`. This repository does not automatically publish or deploy the site.

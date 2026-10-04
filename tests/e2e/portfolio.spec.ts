@@ -40,7 +40,7 @@ test("mobile and reduced motion retain direct project access", async ({
   await page.goto("/");
   await page.getByRole("link", { name: "View projects", exact: true }).click();
   await expect(
-    page.getByRole("heading", { name: "Tools I wanted. So I built them." }),
+    page.getByRole("heading", { name: "Different ideas. Same curiosity." }),
   ).toBeVisible();
   expect(
     await page.evaluate(
@@ -107,7 +107,7 @@ test("studio renders, can be explored, and survives context loss", async ({
     page.getByRole("region", { name: "Hardware & infrastructure window" }),
   ).toBeVisible();
 });
-test("multiple windows, dragging, tiling, resize and keyboard remain usable", async ({
+test("multiple windows, dragging, sound, resize and keyboard remain usable", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1440, height: 950 });
@@ -133,7 +133,24 @@ test("multiple windows, dragging, tiling, resize and keyboard remain usable", as
   await page.mouse.up();
   const moved = (await wallet.boundingBox())!;
   expect(moved.x).toBeGreaterThan(400);
-  await desktop.getByRole("button", { name: "Tile windows" }).click();
+  await expect(
+    desktop.getByRole("button", { name: "Tile windows" }),
+  ).toHaveCount(0);
+  await expect(desktop.getByText("Made for the web.")).toHaveCount(0);
+  const sound = desktop
+    .locator(".desktop-taskbar")
+    .getByRole("button", { name: "Play sound experiment" });
+  await expect(sound).toBeInViewport();
+  await sound.click();
+  await expect(
+    desktop
+      .locator(".desktop-taskbar")
+      .getByRole("button", { name: "Mute sound" }),
+  ).toBeVisible();
+  await desktop
+    .locator(".desktop-taskbar")
+    .getByRole("button", { name: "Mute sound" })
+    .click();
   await page.screenshot({ path: "test-results/desktop-windows.png" });
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(
@@ -242,4 +259,39 @@ test("mobile close restores the invoking project and tab skips covered launchers
       ),
     ).toBe(false);
   }
+});
+
+test("portfolio story and all projects are clear without opening the desktop", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await expect(page.locator(".intro-label")).toHaveText(
+    "The portfolio of Guilherme Vozniak",
+  );
+  await expect(page.locator(".hero-copy > p")).toContainText("As a kid");
+  await expect(page.locator(".hero-copy > p")).toContainText("HTML tag");
+  const cards = page.locator(".featured-project");
+  await expect(cards).toHaveCount(9);
+  await expect(cards.nth(1).getByRole("heading")).toHaveText("Burner Wallet");
+  await expect(cards.nth(1)).toContainText("Nokia");
+  await expect(cards.nth(1)).toContainText("Bitcoin");
+  await expect(cards.nth(2).getByRole("heading")).toHaveText("Blue Macaw");
+  for (const card of await cards.all()) {
+    await expect(card.locator(":scope > p")).not.toBeEmpty();
+    await expect(card.getByRole("link")).toHaveAttribute("href", /^https:\/\//);
+  }
+  await expect(
+    page.getByRole("link", { name: "Blue Macaw website" }),
+  ).toHaveAttribute("href", "https://bluemacaw.org/");
+  await expect(page.getByRole("heading", { name: "Homebrew tap" })).toHaveCount(
+    0,
+  );
+  await page
+    .getByRole("button", { name: "Explore Blue Macaw", exact: true })
+    .click();
+  const blue = page.getByRole("region", { name: "Blue Macaw window" });
+  await expect(
+    blue.getByRole("link", { name: "Visit website" }),
+  ).toHaveAttribute("href", "https://bluemacaw.org/");
+  await expect(blue).toContainText("friend");
 });

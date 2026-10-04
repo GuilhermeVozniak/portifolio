@@ -17,7 +17,7 @@ import { desktopReducer } from "@/lib/desktop";
 import { AppWindow } from "./window";
 import { windowTitle } from "./content";
 const launchers = [
-  { id: "projects", label: "Projects", icon: Folder, color: "orange" },
+  { id: "projects", label: "Projects", icon: Folder, color: "fern" },
   {
     id: "experiments",
     label: "Experiments",
@@ -25,8 +25,8 @@ const launchers = [
     color: "lime",
   },
   { id: "infrastructure", label: "Hardware", icon: Server, color: "silver" },
-  { id: "about", label: "About me", icon: UserRound, color: "purple" },
-  { id: "contact", label: "Say hello", icon: Mail, color: "peach" },
+  { id: "about", label: "About me", icon: UserRound, color: "mint" },
+  { id: "contact", label: "Say hello", icon: Mail, color: "sage" },
   {
     id: "story",
     label: "first-computer.html",
@@ -170,14 +170,8 @@ export default function Desktop({
           <span>Back to the studio</span>
         </button>
         <span className="os-name">
-          gv<span>OS</span> <small>A browser with a childhood dream.</small>
+          gv<span>OS</span>
         </span>
-        <button
-          onClick={onSound}
-          aria-label={sound ? "Mute sound" : "Play sound experiment"}
-        >
-          {sound ? <Volume2 size={17} /> : <VolumeX size={17} />}
-        </button>
       </header>
       <div className="desktop-workspace">
         <div className="desktop-wallpaper" aria-hidden="true">
@@ -247,19 +241,12 @@ export default function Desktop({
           ))}
         </div>
         <button
-          className="tile-button"
-          onClick={() =>
-            dispatch({
-              type: "tile",
-              width: innerWidth,
-              height: innerHeight - 100,
-            })
-          }
+          className="taskbar-sound"
+          onClick={onSound}
+          aria-label={sound ? "Mute sound" : "Play sound experiment"}
         >
-          <LayoutGrid size={17} />
-          <span>Tile windows</span>
+          {sound ? <Volume2 size={17} /> : <VolumeX size={17} />}
         </button>
-        <span className="desktop-hint">Made for the web.</span>
       </footer>
     </div>
   );

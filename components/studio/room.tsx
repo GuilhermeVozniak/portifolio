@@ -1,8 +1,9 @@
 "use client";
-import { useState } from "react";
+import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Html } from "@react-three/drei";
 import { Box, Disc, Keyboard, Rod, Screen, Speaker } from "./objects";
 import type { ThreeEvent } from "@react-three/fiber";
+import { Color, InstancedMesh, Matrix4, Object3D } from "three";
 export interface RoomProps {
   onDesktop: () => void;
   onServer: () => void;
@@ -42,12 +43,120 @@ function Hotspot({
     </group>
   );
 }
+
+function KeyboardWall() {
+  const holes = useRef<InstancedMesh>(null);
+  const keys = useRef<InstancedMesh>(null);
+  useLayoutEffect(() => {
+    const matrix = new Matrix4();
+    for (let row = 0; row < 14; row++) {
+      for (let col = 0; col < 13; col++) {
+        holes.current?.setMatrixAt(
+          row * 13 + col,
+          matrix.makeTranslation(
+            -0.696 + col * 0.116,
+            -0.754 + row * 0.116,
+            0.034,
+          ),
+        );
+      }
+    }
+    if (holes.current) holes.current.instanceMatrix.needsUpdate = true;
+    const palettes = [
+      ["#dfdfcc", "#819768", "#c3e877"],
+      ["#374a3b", "#6d865c", "#b6ff00"],
+      ["#aabd91", "#e5e7d4", "#4d724a"],
+    ];
+    for (let board = 0; board < 3; board++) {
+      for (let row = 0; row < 5; row++) {
+        for (let col = 0; col < 14; col++) {
+          const index = board * 70 + row * 14 + col;
+          const spacebar = row === 4 && col === 6;
+          const underSpacebar = row === 4 && col >= 3 && col <= 9 && !spacebar;
+          matrix.makeScale(
+            underSpacebar ? 0 : spacebar ? 7 : 1,
+            underSpacebar ? 0 : 1,
+            underSpacebar ? 0 : 1,
+          );
+          keys.current?.setMatrixAt(
+            index,
+            matrix.setPosition(
+              -0.488 + col * 0.075,
+              0.53 - board * 0.53 + 0.12 - row * 0.06,
+              0.106,
+            ),
+          );
+          keys.current?.setColorAt(
+            index,
+            new Color(
+              palettes[board][col === 0 || col === 13 ? 2 : row === 0 ? 1 : 0],
+            ),
+          );
+        }
+      }
+    }
+    if (keys.current) {
+      keys.current.instanceMatrix.needsUpdate = true;
+      if (keys.current.instanceColor)
+        keys.current.instanceColor.needsUpdate = true;
+    }
+  }, []);
+  return (
+    <group position={[-2.904, 2.15, -0.28]} rotation={[0, Math.PI / 2, 0]}>
+      <Box size={[1.6, 1.73, 0.06]} color="#809071" radius={0.025} />
+      <instancedMesh ref={holes} args={[undefined, undefined, 182]}>
+        <circleGeometry args={[0.012, 8]} />
+        <meshStandardMaterial color="#354231" roughness={0.9} />
+      </instancedMesh>
+      {[0.53, 0, -0.53].map((y, index) => (
+        <group key={y} position={[0, y, 0]}>
+          <Box
+            position={[0, 0, 0.073]}
+            size={[1.13, 0.36, 0.052]}
+            color={["#b4bcab", "#26372d", "#6e855b"][index]}
+          />
+          {[-0.43, 0.43].map((x) => (
+            <group key={x}>
+              <Rod
+                a={[x, -0.2, 0.03]}
+                b={[x, -0.2, 0.127]}
+                radius={0.012}
+                color="#333c32"
+              />
+              <Rod
+                a={[x, -0.2, 0.127]}
+                b={[x, -0.157, 0.127]}
+                radius={0.012}
+                color="#333c32"
+              />
+            </group>
+          ))}
+        </group>
+      ))}
+      <instancedMesh
+        ref={keys}
+        args={[undefined, undefined, 210]}
+        castShadow
+        receiveShadow
+      >
+        <boxGeometry args={[0.061, 0.046, 0.024]} />
+        <meshStandardMaterial roughness={0.75} />
+      </instancedMesh>
+    </group>
+  );
+}
+
 export default function Room({
   onDesktop,
   onServer,
   onSound,
   onStory,
 }: RoomProps) {
+  const lampTarget = useMemo(() => {
+    const target = new Object3D();
+    target.position.set(-0.42, 1.24, 0.51);
+    return target;
+  }, []);
   return (
     <group position={[-0.35, 0, 0]}>
       {/* Cutaway room and window behind the actual workstation. */}
@@ -126,6 +235,63 @@ export default function Room({
         size={[2.92, 0.09, 0.4]}
         color="#ececda"
       />
+      <KeyboardWall />
+      {/* A small reading shelf on the right wall, clear of the portrait screen. */}
+      <Box
+        position={[2.69, 2.47, -1.65]}
+        size={[1.5, 0.085, 0.49]}
+        color="#92694b"
+      />
+      {[2.13, 3.24].map((x) => (
+        <group key={x}>
+          <Rod
+            a={[x, 2.15, -1.909]}
+            b={[x, 2.43, -1.909]}
+            radius={0.017}
+            color="#3e4f3b"
+          />
+          <Rod
+            a={[x, 2.18, -1.909]}
+            b={[x, 2.43, -1.45]}
+            radius={0.017}
+            color="#3e4f3b"
+          />
+        </group>
+      ))}
+      {[0, 1, 2, 3, 4].map((i) => {
+        const height = [0.42, 0.49, 0.45, 0.39, 0.47][i];
+        return (
+          <group key={i} position={[2.2 + i * 0.14, 2.513 + height / 2, -1.63]}>
+            <Box
+              size={[0.115, height, 0.29]}
+              color={["#b6ff00", "#d8dbc8", "#42623c", "#839b58", "#263f30"][i]}
+              radius={0.008}
+            />
+            <Box
+              position={[0, height * 0.25, 0.148]}
+              size={[0.074, 0.015, 0.004]}
+              color="#eef0db"
+              radius={0}
+            />
+            <Box
+              position={[0, -height * 0.27, 0.148]}
+              size={[0.074, 0.008, 0.004]}
+              color="#eef0db"
+              radius={0}
+            />
+          </group>
+        );
+      })}
+      {[0, 1, 2].map((i) => (
+        <Box
+          key={i}
+          position={[3.08, 2.547 + i * 0.067, -1.65]}
+          size={[0.35, 0.057, 0.31]}
+          rotation={[0, i * 0.07, 0]}
+          color={["#93b963", "#e1e2cb", "#3b583e"][i]}
+          radius={0.008}
+        />
+      ))}
       {/* Standing desk, felt pad and controls. */}
       <Box position={[0, 1.16, 0]} size={[3.92, 0.13, 1.62]} color="#92694b" />
       <Box
@@ -194,9 +360,29 @@ export default function Room({
         />
         <mesh position={[-0.58, 2.772, -0.421]}>
           <boxGeometry args={[0.78, 0.013, 0.019]} />
-          <meshBasicMaterial color="#ffb55b" />
+          <meshStandardMaterial
+            color="#ffd15c"
+            emissive="#ffc04b"
+            emissiveIntensity={1}
+            toneMapped={false}
+          />
         </mesh>
       </Hotspot>
+      <primitive object={lampTarget} />
+      <spotLight
+        position={[-0.58, 2.755, -0.375]}
+        target={lampTarget}
+        color="#ffc05a"
+        intensity={28}
+        angle={0.43}
+        penumbra={0.7}
+        distance={3.1}
+        decay={2}
+        castShadow
+        shadow-mapSize={[512, 512]}
+        shadow-normalBias={0.012}
+        shadow-bias={-0.0001}
+      />
       <Box
         position={[0.99, 2.41, -0.53]}
         size={[0.85, 1.83, 0.085]}
@@ -265,7 +451,7 @@ export default function Room({
       <Box
         position={[-1.44, 1.77, -0.31]}
         size={[0.4, 0.09, 0.23]}
-        color="#a85030"
+        color="#b52826"
       />
       {[-1.55, -1.44, -1.33].map((x) => (
         <Disc
@@ -275,29 +461,70 @@ export default function Room({
           color="#262e27"
         />
       ))}
-      {/* Books and headphones. */}
-      {[0, 1, 2].map((i) => (
-        <Box
-          key={i}
-          position={[-1.72, 1.27 + i * 0.075, 0.06]}
-          size={[0.4, 0.06, 0.49]}
-          rotation={[0, i * 0.12, 0]}
-          color={["#d3bb76", "#354b3c", "#b85b36"][i]}
-        />
-      ))}
-      <mesh position={[-1.55, 1.48, 0.44]} rotation={[Math.PI / 2, 0.3, 0]}>
-        <torusGeometry args={[0.19, 0.027, 8, 24, Math.PI * 1.5]} />
-        <meshStandardMaterial color="#20251e" />
-      </mesh>
-      {[-1.75, -1.38].map((x) => (
-        <Box
-          key={x}
-          position={[x, 1.31, 0.44]}
-          size={[0.095, 0.1, 0.19]}
-          color="#20251e"
-          radius={0.04}
-        />
-      ))}
+      {/* Flat on the desk: both band ends meet the earcups through their yokes. */}
+      <group position={[-1.46, 1.31, 0.53]} rotation={[0, 0.12, 0]}>
+        <mesh
+          position={[0, 0.016, 0]}
+          rotation={[-Math.PI / 2, 0, 0]}
+          castShadow
+        >
+          <torusGeometry args={[0.235, 0.019, 10, 40, Math.PI]} />
+          <meshStandardMaterial
+            color="#383d40"
+            roughness={0.4}
+            metalness={0.5}
+          />
+        </mesh>
+        <mesh
+          position={[0, 0.013, 0]}
+          rotation={[-Math.PI / 2, 0, 0]}
+          castShadow
+        >
+          <torusGeometry args={[0.219, 0.022, 10, 40, Math.PI]} />
+          <meshStandardMaterial color="#202428" roughness={0.92} />
+        </mesh>
+        {[-1, 1].map((side) => (
+          <group key={side} position={[side * 0.235, 0, 0]}>
+            <Rod
+              a={[0, 0.016, 0]}
+              b={[0, 0.008, 0.045]}
+              radius={0.016}
+              color="#555b60"
+            />
+            {[-1, 1].map((fork) => (
+              <Rod
+                key={fork}
+                a={[0, 0.008, 0.036]}
+                b={[fork * 0.078, -0.019, 0.115]}
+                radius={0.012}
+                color="#555b60"
+              />
+            ))}
+            <mesh
+              position={[0, -0.035, 0.115]}
+              scale={[0.82, 1, 1.05]}
+              castShadow
+              receiveShadow
+            >
+              <cylinderGeometry args={[0.112, 0.102, 0.065, 32]} />
+              <meshStandardMaterial color="#22272c" roughness={0.55} />
+            </mesh>
+            <mesh position={[0, -0.001, 0.115]} scale={[0.82, 1, 1.05]}>
+              <cylinderGeometry args={[0.084, 0.084, 0.008, 32]} />
+              <meshStandardMaterial color="#101316" roughness={1} />
+            </mesh>
+            <mesh
+              position={[0, 0.012, 0.115]}
+              rotation={[-Math.PI / 2, 0, 0]}
+              scale={[1, 1.26, 1]}
+              castShadow
+            >
+              <torusGeometry args={[0.067, 0.023, 10, 32]} />
+              <meshStandardMaterial color="#363b40" roughness={0.94} />
+            </mesh>
+          </group>
+        ))}
+      </group>
       {/* Boom microphone: the defining foreground diagonal. */}
       <Rod a={[-1.9, 1.19, 0.55]} b={[-1.9, 1.62, 0.55]} radius={0.033} />
       <Rod a={[-1.9, 1.62, 0.55]} b={[-0.95, 1.64, 0.73]} radius={0.029} />
@@ -410,19 +637,19 @@ export default function Room({
         <Rod
           a={[2.38, 1.65, 0.07]}
           b={[2.46, 1.33, 0.16]}
-          color="#ef683e"
+          color="#7bac45"
           radius={0.009}
         />
         <Rod
           a={[2.55, 1.65, 0.07]}
           b={[2.65, 1.32, 0.16]}
-          color="#eab34c"
+          color="#b6ff00"
           radius={0.009}
         />
       </Hotspot>
       <mesh position={[3.01, 1.27, 0.1]} rotation={[Math.PI / 2, 0, 0]}>
         <torusGeometry args={[0.13, 0.012, 6, 32]} />
-        <meshStandardMaterial color="#477a93" />
+        <meshStandardMaterial color="#5c8a45" />
       </mesh>
       {/* Chair: angled out so it does not obscure the equipment. */}
       <group position={[-1.15, 0, 1.4]} rotation={[0, 0.25, 0]}>
@@ -482,12 +709,12 @@ export default function Room({
       <Box
         position={[-2.13, 2.44, -1.828]}
         size={[0.13, 0.42, 0.006]}
-        color="#ff713e"
+        color="#82bd3d"
       />
       <Box
         position={[-1.99, 2.34, -1.823]}
         size={[0.13, 0.32, 0.006]}
-        color="#657e50"
+        color="#a2d936"
       />
     </group>
   );

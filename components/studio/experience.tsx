@@ -17,6 +17,7 @@ import {
   Music2,
 } from "lucide-react";
 import { projects } from "@/lib/projects";
+import { ProjectArtwork } from "./project-art";
 import { ProjectIcon } from "@/components/desktop/content";
 import { useSound } from "./use-sound";
 const Scene = dynamic(() => import("./scene"), {
@@ -26,6 +27,20 @@ const Scene = dynamic(() => import("./scene"), {
 const Desktop = dynamic(() => import("@/components/desktop/desktop"), {
   ssr: false,
 });
+const projectOrder = [
+  "option-tab",
+  "burner-wallet",
+  "blue-macaw",
+  "tiles-spliter",
+  "app-cleaner",
+  "calendium",
+  "9router",
+  "drag-zone",
+  "rockpi-penta-golang",
+];
+const selectedProjects = [...projects].sort(
+  (a, b) => projectOrder.indexOf(a.id) - projectOrder.indexOf(b.id),
+);
 export default function Experience() {
   const [desktop, setDesktop] = useState(false);
   const [webgl, setWebgl] = useState<boolean | null>(null);
@@ -101,7 +116,7 @@ export default function Experience() {
             <div className="hero-copy">
               <div className="intro-label">
                 <span />
-                Software engineer & curious human
+                The portfolio of Guilherme Vozniak
               </div>
               <h1 id="hero-title">
                 Built out
@@ -109,10 +124,10 @@ export default function Experience() {
                 of curiosity.
               </h1>
               <p>
-                Useful tools. Unusual experiments.
-                <br />
-                And a childhood idea that finally
-                <br className="desktop-break" /> found its way into a browser.
+                I’m a software engineer. As a kid, I thought I could run Windows
+                by putting it inside an HTML tag. This is that idea, revisited:
+                explore my desk, open the computer, and discover the things I
+                build.
               </p>
               <button
                 className="primary-button"
@@ -227,107 +242,63 @@ export default function Experience() {
                   A few things I’ve put into the world
                 </span>
                 <h2>
-                  Tools I wanted.
+                  Different ideas.
                   <br />
-                  So I built them.
+                  Same curiosity.
                 </h2>
               </div>
               <p>
-                From a better way to switch windows
+                Desktop apps, an old Nokia with a new purpose,
                 <br />
-                to a new life for an old phone.
-                <br />
-                Open source, and always evolving.
+                and the software behind my hardware.
+                <br />A closer look at what I’ve been building.
               </p>
             </div>
             <div className="featured-projects">
-              {projects.slice(0, 3).map((p, i) => (
-                <article key={p.id} className={`featured-project feature-${i}`}>
+              {selectedProjects.map((p) => (
+                <article
+                  key={p.id}
+                  className={`featured-project feature-${p.id}`}
+                >
                   <button
                     className="project-art"
                     aria-label={`Explore ${p.name}`}
                     onClick={() => open(p.id)}
                   >
-                    <div className={`art-demo demo-${i}`} aria-hidden="true">
-                      {i === 0 ? (
-                        <>
-                          <div className="mini-window back">
-                            <i />
-                            <i />
-                            <i />
-                            <span />
-                          </div>
-                          <div className="mini-window front">
-                            <span className="mini-code">⌥ tab</span>
-                            <div className="mini-apps">
-                              <span />
-                              <span />
-                              <span />
-                            </div>
-                          </div>
-                          <span className="art-word">Find your flow.</span>
-                        </>
-                      ) : i === 1 ? (
-                        <>
-                          <div className="tile-demo">
-                            <span />
-                            <span />
-                            <span />
-                          </div>
-                          <span className="art-word">
-                            A place for everything.
-                          </span>
-                        </>
-                      ) : (
-                        <>
-                          <div className="cleaner-orbit">
-                            <span>✳</span>
-                          </div>
-                          <span className="art-word">
-                            Room for what matters.
-                          </span>
-                        </>
-                      )}
-                    </div>
+                    <ProjectArtwork id={p.id} />
                     <span className="art-open">
                       <ArrowUpRight size={23} />
                     </span>
                     <span className="art-caption">
-                      Interactive concept · {p.category}
+                      Concept sketch · {p.category}
                     </span>
                   </button>
                   <div className="project-card-heading">
                     <ProjectIcon project={p} />
                     <div>
                       <h3>{p.name}</h3>
-                      <span>{p.technologies.join(" / ")}</span>
+                      <span>{p.technologies.join(" / ") || p.category}</span>
                     </div>
+                  </div>
+                  <p>{p.summary}</p>
+                  <div className="project-card-links">
                     <button
                       aria-label={`Open ${p.name} details`}
                       onClick={() => open(p.id)}
                     >
-                      <ArrowUpRight size={22} />
+                      The project <ArrowUpRight size={15} />
                     </button>
+                    <a
+                      href={p.website || p.source}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={`${p.name} ${p.website ? "website" : "source"}`}
+                    >
+                      {p.website ? "Visit website" : "View source"}
+                      <ArrowUpRight size={15} />
+                    </a>
                   </div>
-                  <p>{p.tagline}</p>
                 </article>
-              ))}
-            </div>
-            <div className="more-projects">
-              {projects.slice(3).map((p) => (
-                <button
-                  key={p.id}
-                  onClick={() => open(p.id)}
-                  aria-label={`Explore ${p.name}`}
-                >
-                  <ProjectIcon project={p} />
-                  <span>
-                    <strong>{p.name}</strong>
-                    <small>{p.tagline}</small>
-                  </span>
-                  <span className="project-category">{p.status}</span>
-                  <ArrowUpRight size={21} />
-                </button>
               ))}
             </div>
             <a
