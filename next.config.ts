@@ -1,21 +1,6 @@
 import type { NextConfig } from "next";
-
 const nextConfig: NextConfig = {
-  images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "media.licdn.com",
-      },
-      {
-        protocol: "https",
-        hostname: "cdn.simpleicons.org",
-      },
-    ],
-    dangerouslyAllowSVG: true,
-    contentDispositionType: "attachment",
-    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
-  },
+  devIndicators: false,
+  distDir: process.env.NODE_ENV === "development" ? ".next-dev" : ".next",
 };
-
 export default nextConfig;

@@ -4,7 +4,7 @@
 
 Rebuild the existing portfolio around Guilherme Vozniak's real public projects, personal studio, and childhood ambition to run an operating system inside an HTML page. Visitors should remember the room and understand the work without needing to learn a game. Keep Next.js and migrate package management and development commands to Bun.
 
-The user approved the workbench direction, expanded it into an explorable office with an interactive computer, and supplied four photographs. The latest explicit constraint is to preserve the shape of the setup while removing clutter. This document makes that direction concrete for review; implementation has not started.
+The user approved the workbench direction, expanded it into an explorable office with an interactive computer, and supplied four photographs. The latest explicit constraint is to preserve the shape of the setup while removing clutter. This document records the approved direction. Implementation and verification evidence are recorded in `../implementation-notes.md`.
 
 ## Scene and visual identity
 

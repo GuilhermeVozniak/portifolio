@@ -1,42 +1,21 @@
-import { ThemeToggle } from "@/components/ui/theme-toggle";
-import Providers from "@/providers";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import "@fontsource/space-grotesk/400.css";
+import "@fontsource/space-grotesk/500.css";
+import "@fontsource/space-grotesk/600.css";
+import "@fontsource/space-grotesk/700.css";
+import "@fontsource/ibm-plex-mono/400.css";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
-  title: "Portifolio - Guilherme Vozniak",
-  description: "Software Engineer & Security Researcher",
-  icons: {
-    icon: "/favicon.ico",
-  },
+  title: "Guilherme Vozniak — Built out of curiosity",
+  description:
+    "Step inside my studio. Explore open-source Mac apps, hardware experiments, and the browser desktop I wanted to build as a kid.",
 };
-
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}
-      >
-        <Providers>
-          <ThemeToggle />
-          {children}
-        </Providers>
-      </body>
+    <html lang="en">
+      <body>{children}</body>
     </html>
   );
 }

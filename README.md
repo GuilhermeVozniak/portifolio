@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Guilherme's studio
 
-## Getting Started
+A personal portfolio built around my actual desk and a childhood idea: running a computer inside an HTML page. Explore the Three.js room, enter the browser desktop, or go straight to the public projects.
 
-First, run the development server:
+## Run locally
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Requires Bun 1.3.13+ and Node.js 20.9+ (used by the Next.js production builder).
+
+```sh
+bun install --frozen-lockfile
+bun run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000. A custom port works with `bun run dev --port 3040`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```sh
+bun run test          # Bun unit tests
+bun run typecheck
+bun run lint
+bunx playwright install chromium
+bun run test:e2e      # Starts/reuses a preview on port 3040
+bun run build
+bun run start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Bun manages dependencies, development, tests, and the production server. The build script uses Next's Node entry point: Bun 1.3.13 currently fails during page-data collection when running this Next.js builder directly. Development and production output are separated (`.next-dev` / `.next`) so a build cannot invalidate the live preview.
 
-## Learn More
+## Content and structure
 
-To learn more about Next.js, take a look at the following resources:
+- `lib/projects.ts`: curated public projects, technologies, maturity, attribution and install commands. No live API or credentials required.
+- `components/studio/room.tsx`: procedural room based on desk photographs; geometry and surface art are original.
+- `components/studio/scene.tsx`: bounded camera controls, transition, rendering quality and context-loss handling.
+- `components/desktop/`: accessible HTML desktop, window controls, project details, personal story and contact.
+- `lib/desktop.ts`: tested window state and viewport bounds.
+- `public/projects/`: local app icons copied from the corresponding public repositories. 9Router uses its custom Darwin icon. Original product origins remain attributed in project details.
+- `public/studio-fallback.svg`: local original illustration shown when WebGL is unavailable.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The three featured project illustrations are labeled concepts, not application screenshots. Photographs, private notes, and private repositories are not included. Personal music is not included; the speaker interaction plays a quiet, seven-second synthesized chord, explicitly labeled a sound experiment.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Controls and accessibility
 
-## Deploy on Vercel
+- Drag the room to look around; use Reset view to restore the camera.
+- Click the main monitor or Open desktop. The laptop opens the childhood HTML story; the server opens hardware/infrastructure projects.
+- The same actions have HTML buttons. Projects remain available before the room loads.
+- Open, move, minimize, maximize, restore, close, or arrange desktop windows. Focus the move control and use arrow keys for keyboard movement.
+- Escape closes the top window, then returns to the room. Focus returns to the originating control. The background is inert while the desktop is open.
+- Mobile uses full-size panels and a taskbar. Reduced motion removes camera travel and damping. No audio autoplays.
+- Missing WebGL, lost graphics contexts and failed images have local fallbacks. Rendering pauses while the document is hidden and otherwise runs on demand.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Verification
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Playwright exercises desktop window lifecycle, mobile layout, reduced motion, forced WebGL failure, graphics-context loss, room orbit/reset, multiple windows, dragging, arrangement, resizing, sound, and the childhood story. It also saves desktop/mobile screenshots in ignored `test-results/` for visual inspection.
+
+Design and execution notes are under `docs/superpowers/`. This repository does not automatically publish or deploy the site.
