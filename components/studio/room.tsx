@@ -572,7 +572,7 @@ export default function Room({
         </group>
       ))}
       <Hotspot
-        label="Explore the hardware side"
+        label="Explore my projects"
         onClick={onServer}
         position={[2.63, 2.1, -0.14]}
       >

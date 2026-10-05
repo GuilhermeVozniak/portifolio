@@ -82,6 +82,7 @@ export const projects: Project[] = [
     status: "Pre-alpha",
     source: github + "burner-wallet",
     symbol: "▤",
+    image: "/projects/burner-wallet.svg",
   },
   {
     id: "calendium",

@@ -32,7 +32,7 @@ Bun manages dependencies, development, tests, and the production server. The bui
 - `components/studio/scene.tsx`: bounded camera controls, transition, rendering quality and context-loss handling.
 - `components/desktop/`: accessible HTML desktop, window controls, project details, personal story and contact.
 - `lib/desktop.ts`: tested window state and viewport bounds.
-- `public/projects/`: local app icons copied from the corresponding public repositories. 9Router uses its custom Darwin icon. Blue Macaw uses the official logo from `https://bluemacaw.org/logo.svg`. Original product origins remain attributed in project details.
+- `public/projects/`: local app icons copied from the corresponding public repositories. 9Router uses its custom Darwin icon. Blue Macaw uses the official logo from `https://bluemacaw.org/logo.svg`. Burner Wallet uses its official web app icon from `companion/web/src/app/icon.svg`. Original product origins remain attributed in project details.
 - `public/studio-fallback.svg`: local original illustration shown when WebGL is unavailable.
 
 All nine project illustrations are original concept sketches, not application screenshots. Each project has a summary and a direct link to its website or public source. Photographs, private notes, and private repositories are not included. Personal music is not included; the speaker interaction plays a quiet, seven-second synthesized chord, explicitly labeled a sound experiment.
@@ -40,7 +40,7 @@ All nine project illustrations are original concept sketches, not application sc
 ## Controls and accessibility
 
 - Drag the room to look around; use Reset view to restore the camera.
-- Click the main monitor or Open desktop. The laptop opens the childhood HTML story; the server opens hardware/infrastructure projects.
+- Click the main monitor or Open desktop. The laptop opens the childhood HTML story; the server opens the complete Projects collection.
 - The same actions have HTML buttons. Projects remain available before the room loads.
 - Open, move, minimize, maximize, restore, or close desktop windows. Focus the move control and use arrow keys for keyboard movement.
 - Escape closes the top window, then returns to the room. Focus returns to the originating control. The background is inert while the desktop is open.

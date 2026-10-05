@@ -3,7 +3,6 @@ import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import {
   ArrowLeft,
   Folder,
-  FlaskConical,
   UserRound,
   Mail,
   FileCode2,
@@ -11,20 +10,12 @@ import {
   Volume2,
   VolumeX,
   LayoutGrid,
-  Server,
 } from "lucide-react";
 import { desktopReducer } from "@/lib/desktop";
 import { AppWindow } from "./window";
 import { windowTitle } from "./content";
 const launchers = [
   { id: "projects", label: "Projects", icon: Folder, color: "fern" },
-  {
-    id: "experiments",
-    label: "Experiments",
-    icon: FlaskConical,
-    color: "lime",
-  },
-  { id: "infrastructure", label: "Hardware", icon: Server, color: "silver" },
   { id: "about", label: "About me", icon: UserRound, color: "mint" },
   { id: "contact", label: "Say hello", icon: Mail, color: "sage" },
   {

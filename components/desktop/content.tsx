@@ -6,7 +6,6 @@ import {
   Check,
   Copy,
   Github,
-  Terminal,
   Folder,
   Mail,
   Code2,
@@ -153,8 +152,6 @@ export function windowTitle(id: string) {
     getProject(id)?.name ??
     {
       projects: "Projects",
-      experiments: "Experiments",
-      infrastructure: "Hardware & infrastructure",
       about: "About me",
       contact: "Say hello",
       story: "first-computer.html",
@@ -226,25 +223,18 @@ export function WindowContent({
         </a>
       </div>
     );
-  const filtered = projects.filter((p) =>
-    id === "experiments"
-      ? p.category === "Experiments"
-      : id === "infrastructure"
-        ? p.category === "Infrastructure"
-        : true,
-  );
   return (
     <div className="app-library">
       <div className="library-heading">
         <div>
-          {id === "infrastructure" ? <Terminal /> : <Folder />}
+          <Folder />
           <h2>{windowTitle(id)}</h2>
         </div>
-        <span>{filtered.length} projects</span>
+        <span>{projects.length} projects</span>
       </div>
       <p>Built from curiosity. Available to explore.</p>
       <div className="library-list">
-        {filtered.map((p) => (
+        {projects.map((p) => (
           <button key={p.id} onClick={() => onOpen(p.id)}>
             <ProjectIcon project={p} />
             <span>

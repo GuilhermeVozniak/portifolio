@@ -18,6 +18,15 @@ test("room and direct content are available; desktop supports a full window life
     .click();
   const projects = page.getByRole("region", { name: "Projects window" });
   await expect(projects).toBeVisible();
+  await expect(
+    projects.locator(".library-list").getByRole("button"),
+  ).toHaveCount(9);
+  await expect(
+    projects.getByRole("button", { name: /Burner Wallet/ }),
+  ).toBeVisible();
+  await expect(
+    projects.getByRole("button", { name: /RockPi Penta/ }),
+  ).toBeVisible();
   await projects.getByRole("button", { name: "Minimize Projects" }).click();
   await expect(projects).toBeHidden();
   await desktop.getByRole("button", { name: "Restore Projects" }).click();
@@ -104,7 +113,7 @@ test("studio renders, can be explored, and survives context loss", async ({
   await expect(page.getByText("A quieter view of the studio.")).toBeVisible();
   await page.getByRole("button", { name: "The server", exact: true }).click();
   await expect(
-    page.getByRole("region", { name: "Hardware & infrastructure window" }),
+    page.getByRole("region", { name: "Projects window" }),
   ).toBeVisible();
 });
 test("multiple windows, dragging, sound, resize and keyboard remain usable", async ({
@@ -212,10 +221,17 @@ test("short landscape desktop keeps every launcher reachable", async ({
   await page.goto("/");
   await page.getByRole("button", { name: "Open desktop", exact: true }).click();
   const desktop = page.getByRole("dialog", { name: "Vozniak OS" });
+  const launchers = desktop.getByRole("navigation", {
+    name: "Desktop applications",
+  });
+  await expect(launchers.getByRole("button")).toHaveCount(4);
+  for (const removed of ["Experiments", "Hardware"]) {
+    await expect(
+      launchers.getByRole("button", { name: removed, exact: true }),
+    ).toHaveCount(0);
+  }
   for (const label of [
     "Projects",
-    "Experiments",
-    "Hardware",
     "About me",
     "Say hello",
     "first-computer.html",
@@ -265,6 +281,7 @@ test("portfolio story and all projects are clear without opening the desktop", a
   page,
 }) => {
   await page.goto("/");
+  await expect(page.getByText("A little room on the internet.")).toHaveCount(0);
   await expect(page.locator(".intro-label")).toHaveText(
     "The portfolio of Guilherme Vozniak",
   );

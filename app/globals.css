@@ -189,19 +189,7 @@ p {
 .project-shortcut:hover {
   color: var(--lime);
 }
-.hero-footnote {
-  margin-top: 42px;
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  font-size: 10px;
-  line-height: 1.6;
-  color: #a2af95;
-}
-.tiny-cross {
-  font-size: 31px;
-  color: var(--lime);
-}
+
 .studio-frame {
   position: relative;
   background: #a7b39b;
@@ -1314,9 +1302,7 @@ p {
   .studio-frame {
     height: 540px;
   }
-  .hero-footnote {
-    margin-top: 30px;
-  }
+
   .room-nav {
     gap: 20px;
     padding-left: 5%;
@@ -1410,9 +1396,7 @@ p {
     margin-left: 23px;
     font-size: 12px;
   }
-  .hero-footnote {
-    display: none;
-  }
+
   .studio-frame {
     height: 420px;
     border-radius: 10px;

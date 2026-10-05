@@ -138,14 +138,6 @@ export default function Experience() {
               <a className="project-shortcut" href="#projects">
                 View projects <ArrowDown size={16} />
               </a>
-              <div className="hero-footnote">
-                <span className="tiny-cross">✳</span>
-                <span>
-                  A little room on the internet.
-                  <br />
-                  Based on the one I build things in.
-                </span>
-              </div>
             </div>
             <div className="studio-frame">
               <div className="scene-topline">
@@ -164,7 +156,7 @@ export default function Experience() {
                 {!desktop && webgl === true && (
                   <Scene
                     onDesktop={() => open(null, true)}
-                    onServer={() => open("infrastructure")}
+                    onServer={() => open("projects")}
                     onStory={() => open("story")}
                     onSound={() => void sound.toggle()}
                     entering={entering}
@@ -225,7 +217,7 @@ export default function Experience() {
             <button onClick={() => open(null, true)}>
               <Monitor size={18} /> The computer <ArrowUpRight size={15} />
             </button>
-            <button onClick={() => open("infrastructure")}>
+            <button onClick={() => open("projects")}>
               <Server size={18} /> The server <ArrowUpRight size={15} />
             </button>
             <button onClick={() => void sound.toggle()}>
